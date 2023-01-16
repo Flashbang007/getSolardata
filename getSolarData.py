@@ -62,7 +62,8 @@ while True:
     except requests.exceptions.HTTPError as err:
         log.error(err)
         continue
-    except:
+    except Exception as err:
+        log.debug(f"HTTP-Error: {err}")
         resultObjct = make_resultobject("", values, True)
         log.debug(f"Empty result set: {resultObjct}")
         emptynessFlag = True

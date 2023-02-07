@@ -44,7 +44,7 @@ def make_resultobject(content: str, values: list, returnEmpty = False) -> dict:
 def pushData(url: str, data: dict) -> bool:
     try: 
         requests.get(url, params=data,)
-    except:
+    except Exception as err:
         log.error(err)
         return False
     return True

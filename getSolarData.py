@@ -53,6 +53,7 @@ def pushData(url: str, data: dict) -> bool:
 log.info("Start Script")
 resultObjct = {} # init resultobjec
 resultObjctLast = {} # init last
+retryFlag = False
 
 while True:
     emptynessFlag = False
@@ -63,10 +64,15 @@ while True:
         log.error(err)
         continue
     except Exception as err:
+        if not retryFlag: # last chance for retry
+            retryFlag = True
+            time.sleep(sleeptime)
+            continue
         log.debug(f"HTTP-Error: {err}")
         resultObjct = make_resultobject("", values, True)
         log.debug(f"Empty result set: {resultObjct}")
         emptynessFlag = True
+        retryFlag = False
     
     if not emptynessFlag:
         log.debug("Decoding html response")

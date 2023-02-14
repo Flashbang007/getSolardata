@@ -12,6 +12,7 @@ url = os.environ['SOLARURL']
 pushUrl = os.environ['PUSHURL']
 username = os.environ['USERNAME']
 password = os.environ['PASSWORD']
+monitoringUrl = os.environ['MONITORINGURL'] #comment if you dont have passive monitoring
 sleeptime = 30
 
 values = [ "webdata_now_p", "webdata_total_e", "webdata_today_e" ]
@@ -56,6 +57,7 @@ resultObjctLast = {} # init last
 retryFlag = False
 
 while True:
+    requests.get(monitoringUrl) #comment if you dont have passive monitoring
     emptynessFlag = False
     log.debug("Try HTTP request")
     try:

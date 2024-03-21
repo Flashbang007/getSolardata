@@ -1,4 +1,4 @@
-#!/usr/bin/python3.8
+#!/usr/bin/python3.10
 
 import os
 import requests
@@ -20,6 +20,7 @@ values = [ "webdata_now_p", "webdata_total_e", "webdata_today_e" ]
 log = logging.getLogger()
 log.addHandler(JournalHandler())
 log.setLevel(logging.INFO)
+#log.setLevel(logging.DEBUG)
 
 ### functions ###
 def make_resultobject(content: str, values: list, returnEmpty = False) -> dict:
@@ -57,7 +58,11 @@ resultObjctLast = {} # init last
 retryFlag = False
 
 while True:
-    requests.get(monitoringUrl) #comment if you dont have passive monitoring
+    try: 
+        requests.get(monitoringUrl) 
+    except Exception as err:
+        log.debug(err)
+
     emptynessFlag = False
     log.debug("Try HTTP request")
     try:

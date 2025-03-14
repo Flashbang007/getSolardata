@@ -20,6 +20,7 @@ values = [ "webdata_now_p", "webdata_total_e", "webdata_today_e" ]
 log = logging.getLogger()
 log.addHandler(JournalHandler())
 log.setLevel(logging.ERROR)
+#log.setLevel(logging.INFO)
 #log.setLevel(logging.DEBUG)
 
 ### functions ###
@@ -45,7 +46,7 @@ def make_resultobject(content: str, values: list, returnEmpty = False) -> dict:
 
 def pushData(url: str, data: dict) -> bool:
     try: 
-        requests.get(url, params=data,)
+        requests.get(url, params=data, timeout=5)
     except Exception as err:
         log.error(f"HTTP-Push-data: {err}")
         return False

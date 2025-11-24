@@ -60,6 +60,7 @@ steps:
             -e MONITORINGURL=$MONITORINGURL \
             gitea.deinschmitz.de/flashbang/getsolardata:latest
 
+
 trigger:
   branch:
     - main

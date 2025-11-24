@@ -1,0 +1,62 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  # --- 1. Syntax Check -----------------------------------------
+  - name: python-syntax-check
+    image: python:3.10
+    commands:
+      - python -m py_compile getSolarData.py
+
+  # --- 2. Docker Build -----------------------------------------
+  - name: build-image
+    image: plugins/docker
+    settings:
+      repo: gitea.deinschmitz.de/flashbang/getsolardata
+      registry: gitea.deinschmitz.de
+      tags:
+        - latest
+      username:
+        from_secret: REGISTRY_USERNAME
+      password:
+        from_secret: REGISTRY_PASSWORD
+      dockerfile: Dockerfile
+
+  # --- 3. Deployment per SSH -----------------------------------
+  - name: deploy
+    image: appleboy/drone-ssh
+    environment:
+      SOLARURL:
+        from_secret: SOLARURL
+      PUSHURL:
+        from_secret: PUSHURL
+      USERNAME:
+        from_secret: USERNAME
+      PASSWORD:
+        from_secret: PASSWORD
+      MONITORINGURL:
+        from_secret: MONITORINGURL
+    settings:
+      host: your-server-ip-or-hostname
+      username: your-ssh-user
+      port: 22
+      key:
+        from_secret: ssh_key
+      script:
+        - docker pull gitea.deinschmitz.de/flashbang/getsolardata:latest
+        - docker stop solardata || true
+        - docker rm solardata || true
+        - docker run -d \
+            --name solardata \
+            -e SOLARURL=$SOLARURL \
+            -e PUSHURL=$PUSHURL \
+            -e USERNAME=$USERNAME \
+            -e PASSWORD=$PASSWORD \
+            -e MONITORINGURL=$MONITORINGURL \
+            gitea.deinschmitz.de/flashbang/getsolardata:latest
+
+trigger:
+  branch:
+    - main
+    - master

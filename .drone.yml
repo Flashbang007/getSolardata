@@ -7,17 +7,6 @@ workspace:
   path: .
 
 steps:
-  # --- 0. Explicit Git clone with PAT --------------------------------
-  - name: git-clone
-    image: alpine/git
-    environment:
-      GITEA_USERNAME:
-        from_secret: GITEA_CLONE_USERNAME
-      GITEA_TOKEN:
-        from_secret: GITEA_CLONE_PASSWORD
-    commands:
-      - git clone https://$GITEA_USERNAME:$GITEA_TOKEN@gitea.deinschmitz.de/flashbang/getsolardata.git /drone/src
-
   # --- 1. Syntax Check -----------------------------------------
   - name: python-syntax-check
     image: python:3.10

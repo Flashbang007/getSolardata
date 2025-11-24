@@ -2,25 +2,16 @@ kind: pipeline
 type: docker
 name: default
 
-#workspace:
-#  base: /drone/src
-#  path: .
+workspace:
+  base: /drone/src
+  path: .
 
 # Set private mode flags for private Gitea repository
 environment:
   GOGS_PRIVATE_MODE: true
 
+# Enable automatic Drone clone instead of manual clone step for simplicity and credential handling
 steps:
-  - name: clone
-    image: alpine/git
-    environment:
-      GITEA_USERNAME:
-        from_secret: GITEA_CLONE_USERNAME
-      GITEA_PASSWORD:
-        from_secret: GITEA_CLONE_PASSWORD
-    commands:
-      - git clone https://$GITEA_USERNAME:$GITEA_PASSWORD@gitea.deinschmitz.de/flashbang/getSolardata.git .
-
   # --- 1. Syntax Check -----------------------------------------
   - name: python-syntax-check
     image: python:3.10
@@ -73,7 +64,6 @@ steps:
             -e PASSWORD=$PASSWORD \
             -e MONITORINGURL=$MONITORINGURL \
             gitea.deinschmitz.de/flashbang/getsolardata:latest
-
 
 trigger:
   branch:

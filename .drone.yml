@@ -59,4 +59,3 @@ steps:
 trigger:
   branch:
     - main
-    - master

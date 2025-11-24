@@ -59,14 +59,7 @@ steps:
             -e PASSWORD=$PASSWORD \
             -e MONITORINGURL=$MONITORINGURL \
             gitea.deinschmitz.de/flashbang/getsolardata:latest
-
-clone:
-  git:
-    image: alpine/git
-    https_username:
-      from_secret: GITEA_CLONE_USERNAME
-    https_password:
-      from_secret: GITEA_CLONE_PASSWORD
+            
 
 trigger:
   branch:

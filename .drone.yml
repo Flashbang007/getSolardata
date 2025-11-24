@@ -60,13 +60,13 @@ steps:
             -e MONITORINGURL=$MONITORINGURL \
             gitea.deinschmitz.de/flashbang/getsolardata:latest
 
-clone:
-  git:
-    image: woodpeckerci/plugin-git
-    username:
-      from_secret: REGISTRY_USERNAME
-    password:
-      from_secret: REGISTRY_PASSWORD
+#clone:
+#  git:
+#    image: woodpeckerci/plugin-git
+#    username:
+#      from_secret: REGISTRY_USERNAME
+#    password:
+#      from_secret: REGISTRY_PASSWORD
 
 trigger:
   branch:

@@ -19,18 +19,18 @@ steps:
       - python -m py_compile getSolarData.py
 
   # --- 2. Docker Build -----------------------------------------
-  - name: build-image
-    image: plugins/docker
-    settings:
-      repo: gitea.deinschmitz.de/flashbang/getsolardata
-      registry: gitea.deinschmitz.de
-      tags:
-        - latest
-      username:
-        from_secret: REGISTRY_USERNAME
-      password:
-        from_secret: REGISTRY_PASSWORD
-      dockerfile: Dockerfile
+  #- name: build-image
+  #  image: plugins/docker
+  #  settings:
+  #    repo: gitea.deinschmitz.de/flashbang/getsolardata
+  #    registry: gitea.deinschmitz.de
+  #    tags:
+  #      - latest
+  #    username:
+  #      from_secret: REGISTRY_USERNAME
+  #    password:
+  #      from_secret: REGISTRY_PASSWORD
+  #    dockerfile: Dockerfile
 
   # --- 3. Deployment per SSH -----------------------------------
   - name: deploy

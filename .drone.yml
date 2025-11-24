@@ -6,6 +6,10 @@ workspace:
   base: /drone/src
   path: .
 
+# Set private mode flags for private Gitea repository
+environment:
+  GOGS_PRIVATE_MODE: true
+
 steps:
   # --- 1. Syntax Check -----------------------------------------
   - name: python-syntax-check
@@ -59,7 +63,6 @@ steps:
             -e PASSWORD=$PASSWORD \
             -e MONITORINGURL=$MONITORINGURL \
             gitea.deinschmitz.de/flashbang/getsolardata:latest
-
 
 trigger:
   branch:

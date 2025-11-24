@@ -6,11 +6,6 @@ workspace:
   base: /drone/src
   path: .
 
-# Set private mode flags for private Gitea repository
-environment:
-  GOGS_PRIVATE_MODE: true
-
-# Enable automatic Drone clone instead of manual clone step for simplicity and credential handling
 steps:
   # --- 1. Syntax Check -----------------------------------------
   - name: python-syntax-check
@@ -19,18 +14,18 @@ steps:
       - python -m py_compile getSolarData.py
 
   # --- 2. Docker Build -----------------------------------------
-  #- name: build-image
-  #  image: plugins/docker
-  #  settings:
-  #    repo: gitea.deinschmitz.de/flashbang/getsolardata
-  #    registry: gitea.deinschmitz.de
-  #    tags:
-  #      - latest
-  #    username:
-  #      from_secret: REGISTRY_USERNAME
-  #    password:
-  #      from_secret: REGISTRY_PASSWORD
-  #    dockerfile: Dockerfile
+  - name: build-image
+    image: plugins/docker
+    settings:
+      repo: gitea.deinschmitz.de/flashbang/getsolardata
+      registry: gitea.deinschmitz.de
+      tags:
+        - latest
+      username:
+        from_secret: REGISTRY_USERNAME
+      password:
+        from_secret: REGISTRY_PASSWORD
+      dockerfile: Dockerfile
 
   # --- 3. Deployment per SSH -----------------------------------
   - name: deploy

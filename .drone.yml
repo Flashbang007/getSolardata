@@ -2,9 +2,9 @@ kind: pipeline
 type: docker
 name: default
 
-workspace:
-  base: /drone/src
-  path: .
+#workspace:
+#  base: /drone/src
+#  path: .
 
 # Set private mode flags for private Gitea repository
 environment:
